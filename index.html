@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>متجر البراند — نموذج تصميم</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --gold:#b8912f; --gold-2:#d4af37; --gold-dark:#8a6d1f;
+    --ink:#2b2118; --muted:#8a7a63; --cream:#faf6ee; --card:#ffffff;
+    --line:#eadfc8; --green:#1faa55;
+  }
+  body{ font-family:"Noto Sans Arabic","Segoe UI",Tahoma,sans-serif; background:#e9e2d2; color:var(--ink); }
+  .phone{ max-width:430px; margin:0 auto; background:var(--cream); min-height:100vh; box-shadow:0 0 40px rgba(0,0,0,.18); }
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  /* header */
+  .announce{ background:linear-gradient(90deg,var(--gold-dark),var(--gold-2),var(--gold-dark)); color:#fff; text-align:center; font-size:12.5px; font-weight:700; padding:8px 10px; letter-spacing:.2px; }
+  header{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px 10px; background:var(--cream); }
+  .brand{ text-align:center; }
+  .brand .logo{ font-size:23px; font-weight:900; color:var(--gold-dark); letter-spacing:.5px; }
+  .brand .tag{ font-size:10.5px; color:var(--muted); margin-top:1px; }
+  .icon-btn{ width:38px; height:38px; border:1.5px solid var(--line); border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; font-size:17px; position:relative; color:var(--ink); }
+  .badge{ position:absolute; top:-5px; inset-inline-start:-5px; background:var(--gold); color:#fff; font-size:10.5px; font-weight:800; width:19px; height:19px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  nav{ display:flex; gap:20px; justify-content:center; padding:8px 0 12px; font-size:13.5px; font-weight:700; color:#5c4c33; border-bottom:1px solid var(--line); background:var(--cream); }
+  nav span.on{ color:var(--gold-dark); border-bottom:2.5px solid var(--gold-2); padding-bottom:3px; }
+
+  /* hero */
+  .hero{ position:relative; }
+  .hero img{ width:100%; height:340px; object-fit:cover; display:block; }
+  .hero .shade{ position:absolute; inset:0; background:linear-gradient(to top, rgba(43,28,4,.62), rgba(43,28,4,0) 55%); }
+  .hero .txt{ position:absolute; bottom:20px; right:20px; left:20px; color:#fff; }
+  .hero h1{ font-size:26px; font-weight:900; line-height:1.45; text-shadow:0 2px 10px rgba(0,0,0,.35); }
+  .hero p{ font-size:13.5px; opacity:.95; margin:6px 0 14px; }
+  .btn{ display:inline-block; border:none; cursor:pointer; font-family:inherit; font-weight:800; border-radius:999px; padding:12px 26px; font-size:14.5px; }
+  .btn-gold{ background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#fff; box-shadow:0 6px 18px rgba(184,145,47,.45); }
+  .btn-block{ display:block; width:100%; text-align:center; padding:14px; font-size:15.5px; }
+  .btn-outline{ background:#fff; border:1.8px solid var(--gold); color:var(--gold-dark); }
+  .btn-wa{ background:var(--green); color:#fff; }
+
+  /* trust */
+  .trust{ display:flex; gap:8px; padding:14px 14px 4px; }
+  .trust .t{ flex:1; background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px 6px; text-align:center; }
+  .trust .t .ic{ font-size:19px; }
+  .trust .t .tx{ font-size:11px; font-weight:700; color:#5c4c33; margin-top:4px; line-height:1.5; }
+
+  /* sections */
+  .sec{ padding:20px 16px 6px; }
+  .sec h2{ font-size:19px; font-weight:900; color:var(--ink); }
+  .sec .sub{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:14px 16px 4px; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden; }
+  .card.wide{ grid-column:1 / -1; }
+  .card img{ width:100%; height:150px; object-fit:cover; display:block; }
+  .card.wide img{ height:190px; }
+  .card .cb{ padding:11px 12px 13px; }
+  .card h3{ font-size:14.5px; font-weight:800; line-height:1.5; }
+  .chip{ display:inline-block; background:#f6ecd4; color:var(--gold-dark); font-size:11px; font-weight:800; border-radius:999px; padding:3px 9px; margin-top:5px; }
+  .price{ margin-top:7px; font-size:16.5px; font-weight:900; color:var(--gold-dark); }
+  .price s{ color:#b6a888; font-size:12.5px; font-weight:600; margin-inline-start:6px; }
+  .card .btn{ margin-top:10px; padding:9px 0; width:100%; font-size:13.5px; }
+
+  .offer{ margin:18px 16px 4px; border-radius:18px; padding:18px; background:linear-gradient(135deg,#3a2a08,#8a6d1f 60%,#b8912f); color:#fff; text-align:center; }
+  .offer h3{ font-size:19px; font-weight:900; }
+  .offer p{ font-size:13px; opacity:.92; margin-top:5px; }
+  .offer .code{ display:inline-block; margin-top:11px; border:1.6px dashed #ffe9a8; color:#ffe9a8; font-weight:900; border-radius:10px; padding:6px 16px; letter-spacing:1px; font-size:14px; }
+
+  footer{ margin-top:24px; background:#241a0c; color:#e8dcc2; padding:22px 18px 26px; }
+  footer .fl{ font-size:18px; font-weight:900; color:var(--gold-2); }
+  footer p{ font-size:12px; line-height:1.9; opacity:.85; margin-top:6px; }
+  footer .cols{ display:flex; gap:24px; margin-top:14px; font-size:12.5px; line-height:2.1; }
+  footer .cols b{ color:#fff; display:block; margin-bottom:2px; }
+  .wa-float{ margin-top:16px; background:var(--green); color:#fff; text-align:center; font-weight:800; border-radius:12px; padding:12px; font-size:14px; }
+
+  /* product page */
+  .pimg{ width:100%; height:330px; object-fit:cover; display:block; }
+  .thumbs{ display:flex; gap:8px; padding:10px 16px 0; }
+  .thumbs img{ width:64px; height:64px; object-fit:cover; border-radius:12px; border:2px solid transparent; }
+  .thumbs img.on{ border-color:var(--gold-2); }
+  .pbody{ padding:14px 18px 8px; }
+  .stars{ color:var(--gold-2); font-size:14px; letter-spacing:2px; }
+  .stars small{ color:var(--muted); letter-spacing:0; font-size:12px; }
+  .pbody h1{ font-size:21px; font-weight:900; margin-top:5px; line-height:1.5; }
+  .pprice{ font-size:23px; font-weight:900; color:var(--gold-dark); margin-top:8px; }
+  .pprice s{ font-size:15px; color:#b6a888; font-weight:600; margin-inline-start:8px; }
+  .pprice .save{ background:#fdeeda; color:#c46a00; font-size:11.5px; font-weight:800; border-radius:999px; padding:3px 9px; margin-inline-start:8px; vertical-align:middle; }
+  .specs{ display:flex; gap:8px; margin-top:13px; }
+  .specs .sp{ flex:1; background:#fff; border:1px solid var(--line); border-radius:12px; text-align:center; padding:9px 4px; }
+  .specs .sp b{ display:block; font-size:14px; }
+  .specs .sp span{ font-size:11px; color:var(--muted); font-weight:700; }
+  .qty{ display:flex; align-items:center; gap:14px; margin-top:16px; }
+  .qty .box{ display:flex; align-items:center; border:1.6px solid var(--line); background:#fff; border-radius:999px; overflow:hidden; }
+  .qty .box button{ width:38px; height:38px; border:none; background:none; font-size:19px; font-weight:800; color:var(--gold-dark); font-family:inherit; }
+  .qty .box b{ min-width:26px; text-align:center; }
+  .qty label{ font-size:13px; font-weight:800; color:#5c4c33; }
+  .cta-row{ display:flex; flex-direction:column; gap:9px; margin-top:16px; }
+  .acc{ margin-top:16px; border-top:1px solid var(--line); }
+  .acc .row{ display:flex; justify-content:space-between; padding:13px 2px; border-bottom:1px solid var(--line); font-size:13.5px; font-weight:800; color:#4c3d24; }
+  .acc .row span{ color:var(--muted); }
+  .desc{ font-size:13px; line-height:2; color:#5c4c33; padding:12px 2px 2px; }
+
+  /* cart / checkout */
+  .page-title{ padding:18px 18px 4px; font-size:20px; font-weight:900; }
+  .page-title small{ display:block; font-size:12.5px; color:var(--muted); font-weight:600; margin-top:2px; }
+  .citem{ display:flex; gap:12px; background:#fff; border:1px solid var(--line); border-radius:16px; margin:12px 16px 0; padding:11px; }
+  .citem img{ width:76px; height:76px; border-radius:12px; object-fit:cover; }
+  .citem h4{ font-size:14px; font-weight:800; line-height:1.5; }
+  .citem .meta{ font-size:11.5px; color:var(--muted); font-weight:700; margin-top:2px; }
+  .citem .row2{ display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
+  .citem .pr{ font-weight:900; color:var(--gold-dark); font-size:15px; }
+  .mini-qty{ display:flex; align-items:center; border:1.4px solid var(--line); border-radius:999px; }
+  .mini-qty button{ width:28px; height:28px; border:none; background:none; font-size:16px; font-weight:800; color:var(--gold-dark); font-family:inherit; }
+  .mini-qty b{ min-width:20px; text-align:center; font-size:13px; }
+  .summary{ background:#fff; border:1px solid var(--line); border-radius:16px; margin:16px; padding:16px; }
+  .summary .r{ display:flex; justify-content:space-between; font-size:13.5px; font-weight:700; color:#5c4c33; padding:6px 0; }
+  .summary .r.total{ border-top:1.6px dashed var(--line); margin-top:8px; padding-top:12px; font-size:16.5px; font-weight:900; color:var(--ink); }
+  .summary .r .free{ color:var(--green); font-weight:900; }
+  .note{ margin:0 16px; font-size:12px; color:var(--muted); text-align:center; line-height:1.9; }
+  .pad{ padding:14px 16px 26px; }
+
+  form{ padding:8px 16px 0; }
+  .fld{ margin-top:12px; }
+  .fld label{ display:block; font-size:13px; font-weight:800; color:#4c3d24; margin-bottom:6px; }
+  .fld input,.fld select{ width:100%; border:1.6px solid var(--line); background:#fff; border-radius:12px; padding:12px 13px; font-family:inherit; font-size:14px; color:var(--ink); }
+  .fld input::placeholder{ color:#bfb096; }
+  .pay{ margin:16px 16px 0; }
+  .pay h3{ font-size:15px; font-weight:900; margin-bottom:9px; }
+  .payopt{ display:flex; align-items:center; gap:10px; background:#fff; border:1.8px solid var(--line); border-radius:14px; padding:13px 14px; margin-top:8px; font-size:14px; font-weight:800; }
+  .payopt.on{ border-color:var(--gold-2); background:#fdf6e0; }
+  .payopt .dot{ width:19px; height:19px; border-radius:50%; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; }
+  .payopt.on .dot::after{ content:""; width:10px; height:10px; border-radius:50%; background:var(--gold); }
+  .payopt small{ margin-inline-start:auto; color:var(--muted); font-weight:700; font-size:11.5px; }
+  .paydet{ background:#fff; border:1.6px dashed var(--gold-2); border-radius:14px; padding:12px 14px; margin-top:8px; }
+  .paydet .num{ font-size:17px; font-weight:900; color:var(--gold-dark); letter-spacing:.5px; direction:ltr; text-align:center; }
+  .paydet .hint{ font-size:12px; color:var(--muted); line-height:1.9; margin-top:6px; text-align:center; font-weight:700; }
+  .paynote{ font-size:11.5px; color:var(--muted); text-align:center; margin-top:12px; line-height:1.9; font-weight:700; }
+
+  /* success */
+  .success{ text-align:center; padding:64px 28px 40px; }
+  .check{ width:92px; height:92px; margin:0 auto; border-radius:50%; background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#fff; font-size:46px; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px rgba(184,145,47,.4); }
+  .success h1{ font-size:22px; font-weight:900; margin-top:22px; }
+  .success p{ font-size:13.5px; color:var(--muted); line-height:2; margin-top:8px; }
+  .success .ord{ display:inline-block; margin-top:14px; background:#fff; border:1.6px dashed var(--gold-2); color:var(--gold-dark); font-weight:900; border-radius:12px; padding:8px 20px; font-size:15px; }
+  .success .btn{ margin-top:26px; }
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- ══════════ HOME ══════════ -->
+  <section class="screen" id="s-home">
+    <div class="announce">شحن مجاني داخل مصر للطلبات الأعلى من 50,000 ج.م</div>
+    <header>
+      <div class="icon-btn">☰</div>
+      <div class="brand"><div class="logo">✦ اسم البراند</div><div class="tag">ذهب وألماس · فخامة في كل تفصيلة</div></div>
+      <div class="icon-btn">🛍<span class="badge">2</span></div>
+    </header>
+    <nav><span class="on">الرئيسية</span><span>التشكيلة</span><span>العروض</span><span>تواصل معنا</span></nav>
+
+    <div class="hero">
+      <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+      <div class="shade"></div>
+      <div class="txt">
+        <h1>خلاخيل ذهب وألماس<br>فخامة تليق بيكي</h1>
+        <p>عيار 21 مختوم ومضمون · توصيل لباب البيت</p>
+        <button class="btn btn-gold">تسوقي التشكيلة</button>
+      </div>
+    </div>
+
+    <div class="trust">
+      <div class="t"><div class="ic">♛</div><div class="tx">عيار مضمون<br>ومختوم رسمياً</div></div>
+      <div class="t"><div class="ic">💵</div><div class="tx">الدفع عند<br>الاستلام</div></div>
+      <div class="t"><div class="ic">↩</div><div class="tx">استرجاع خلال<br>14 يوم</div></div>
+    </div>
+
+    <div class="sec"><h2>تشكيلتنا</h2><div class="sub">٣ منتجات مختارة بعناية — ذهب وألماس أصلي</div></div>
+    <div class="grid">
+      <div class="card">
+        <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+        <div class="cb"><h3>خلخال ذهب «الدلع»</h3><span class="chip">عيار 21 · 5 جرام</span>
+        <div class="price">27,900 ج.م<s>31,000</s></div>
+        <button class="btn btn-gold">أضيفي للسلة</button></div>
+      </div>
+      <div class="card">
+        <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+        <div class="cb"><h3>خلخال ذهب «الدلع»</h3><span class="chip">عيار 21 · 10 جرام</span>
+        <div class="price">54,900 ج.م<s>59,500</s></div>
+        <button class="btn btn-gold">أضيفي للسلة</button></div>
+      </div>
+      <div class="card wide">
+        <img src="assets/media-generation-diamond-anklet-0-2999d054-cfe2-4d9b-ad4c-213172a054ed.webp" alt="">
+        <div class="cb"><h3>خلخال ألماس «الأميرة»</h3><span class="chip">ألماس صافي 100%</span>
+        <div class="price">89,900 ج.م<s>99,000</s></div>
+        <button class="btn btn-gold">أضيفي للسلة</button></div>
+      </div>
+    </div>
+
+    <div class="offer">
+      <h3>🎉 عرض الدلع</h3>
+      <p>خصم إضافي 10% على أول طلب ليكي من المتجر</p>
+      <div class="code">DALAA10</div>
+    </div>
+
+    <footer>
+      <div class="fl">✦ اسم البراند</div>
+      <p>مجوهرات ذهب وألماس أصلية بعيار مضمون ومختوم، مع فاتورة معتمدة وضمان استبدال. بنوصل لكل محافظات مصر.</p>
+      <div class="cols">
+        <div><b>المتجر</b>التشكيلة<br>العروض<br>سياسة الاسترجاع</div>
+        <div><b>خدمة العملاء</b>الأسئلة الشائعة<br>تتبع الطلب<br>تواصل معنا</div>
+      </div>
+      <div class="wa-float">💬 كلمينا واتساب — رد سريع من 10 صباحاً لـ 10 مساءً</div>
+      <p style="text-align:center;margin-top:14px;">© 2026 اسم البراند — كل الحقوق محفوظة</p>
+    </footer>
+  </section>
+
+  <!-- ══════════ PRODUCT: GOLD 5G ══════════ -->
+  <section class="screen" id="s-gold5">
+    <div class="announce">شحن مجاني داخل مصر للطلبات الأعلى من 50,000 ج.م</div>
+    <header>
+      <div class="icon-btn">‹</div>
+      <div class="brand"><div class="logo">✦ اسم البراند</div><div class="tag">ذهب وألماس · فخامة في كل تفصيلة</div></div>
+      <div class="icon-btn">🛍<span class="badge">2</span></div>
+    </header>
+    <img class="pimg" src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+    <div class="thumbs">
+      <img class="on" src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+      <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" style="object-position:top" alt="">
+      <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" style="object-position:bottom" alt="">
+    </div>
+    <div class="pbody">
+      <div class="stars">★★★★★ <small>4.9 · تقييم 132 عميلة</small></div>
+      <h1>خلخال ذهب «الدلع» — شبكة بحبات متدلية</h1>
+      <div class="pprice">27,900 ج.م<s>31,000</s><span class="save">وفري 10%</span></div>
+      <div class="specs">
+        <div class="sp"><b>21</b><span>العيار</span></div>
+        <div class="sp"><b>5 جرام</b><span>الوزن</span></div>
+        <div class="sp"><b>مختوم</b><span>دمغة رسمية</span></div>
+      </div>
+      <div class="qty"><label>الكمية</label><div class="box"><button>+</button><b>1</b><button>−</button></div></div>
+      <div class="cta-row">
+        <button class="btn btn-gold btn-block">أضيفي للسلة 🛍</button>
+        <button class="btn btn-wa btn-block">اطلبي دلوقتي واتساب 💬</button>
+      </div>
+      <p class="desc">خلخال ذهب أصفر عيار 21 بتصميم شبكي راقي وحبات ذهبية متدلية بتتحرك مع كل خطوة. قطعة خفيفة وأنيقة تناسب الإطلالات اليومية والمناسبات، وبيوصلك في علبة هدايا فاخرة مع فاتورة معتمدة.</p>
+      <div class="acc">
+        <div class="row">الشحن والتوصيل <span>2–4 أيام · كل المحافظات</span></div>
+        <div class="row">الاسترجاع والاستبدال <span>خلال 14 يوم</span></div>
+        <div class="row">ضمان العيار <span>فاتورة + دمغة رسمية</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ PRODUCT: GOLD 10G ══════════ -->
+  <section class="screen" id="s-gold10">
+    <div class="announce">شحن مجاني داخل مصر للطلبات الأعلى من 50,000 ج.م</div>
+    <header>
+      <div class="icon-btn">‹</div>
+      <div class="brand"><div class="logo">✦ اسم البراند</div><div class="tag">ذهب وألماس · فخامة في كل تفصيلة</div></div>
+      <div class="icon-btn">🛍<span class="badge">2</span></div>
+    </header>
+    <img class="pimg" src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+    <div class="thumbs">
+      <img class="on" src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+      <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" style="object-position:top" alt="">
+      <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" style="object-position:bottom" alt="">
+    </div>
+    <div class="pbody">
+      <div class="stars">★★★★★ <small>5.0 · تقييم 87 عميلة</small></div>
+      <h1>خلخال ذهب «الدلع» — النسخة الأثقل 10 جرام</h1>
+      <div class="pprice">54,900 ج.م<s>59,500</s><span class="save">وفري 8%</span></div>
+      <div class="specs">
+        <div class="sp"><b>21</b><span>العيار</span></div>
+        <div class="sp"><b>10 جرام</b><span>الوزن</span></div>
+        <div class="sp"><b>مختوم</b><span>دمغة رسمية</span></div>
+      </div>
+      <div class="qty"><label>الكمية</label><div class="box"><button>+</button><b>1</b><button>−</button></div></div>
+      <div class="cta-row">
+        <button class="btn btn-gold btn-block">أضيفي للسلة 🛍</button>
+        <button class="btn btn-wa btn-block">اطلبي دلوقتي واتساب 💬</button>
+      </div>
+      <p class="desc">نفس تصميم «الدلع» الشبكي المحبوب، بوزن مضاعف 10 جرام لحضور أقوى ولمعة أوضح — اختيار مثالي للي بتحب القطع الثقيلة والقيمة الاستثمارية الأعلى. بيوصلك في علبة هدايا فاخرة مع فاتورة معتمدة.</p>
+      <div class="acc">
+        <div class="row">الشحن والتوصيل <span>شحن مجاني · 2–4 أيام</span></div>
+        <div class="row">الاسترجاع والاستبدال <span>خلال 14 يوم</span></div>
+        <div class="row">ضمان العيار <span>فاتورة + دمغة رسمية</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ PRODUCT: DIAMOND ══════════ -->
+  <section class="screen" id="s-diamond">
+    <div class="announce">شحن مجاني داخل مصر للطلبات الأعلى من 50,000 ج.م</div>
+    <header>
+      <div class="icon-btn">‹</div>
+      <div class="brand"><div class="logo">✦ اسم البراند</div><div class="tag">ذهب وألماس · فخامة في كل تفصيلة</div></div>
+      <div class="icon-btn">🛍<span class="badge">2</span></div>
+    </header>
+    <img class="pimg" src="assets/media-generation-diamond-anklet-0-2999d054-cfe2-4d9b-ad4c-213172a054ed.webp" alt="">
+    <div class="thumbs">
+      <img class="on" src="assets/media-generation-diamond-anklet-0-2999d054-cfe2-4d9b-ad4c-213172a054ed.webp" alt="">
+      <img src="assets/media-generation-diamond-anklet-0-2999d054-cfe2-4d9b-ad4c-213172a054ed.webp" style="object-position:top" alt="">
+      <img src="assets/media-generation-diamond-anklet-0-2999d054-cfe2-4d9b-ad4c-213172a054ed.webp" style="object-position:bottom" alt="">
+    </div>
+    <div class="pbody">
+      <div class="stars">★★★★★ <small>4.8 · تقييم 64 عميلة</small></div>
+      <h1>خلخال ألماس «الأميرة» — فصوص متدلية براقة</h1>
+      <div class="pprice">89,900 ج.م<s>99,000</s><span class="save">وفري 9%</span></div>
+      <div class="specs">
+        <div class="sp"><b>100%</b><span>ألماس صافي</span></div>
+        <div class="sp"><b>شهادة</b><span>ضمان معتمد</span></div>
+        <div class="sp"><b>فاخر</b><span>تصميم حصري</span></div>
+      </div>
+      <div class="qty"><label>الكمية</label><div class="box"><button>+</button><b>1</b><button>−</button></div></div>
+      <div class="cta-row">
+        <button class="btn btn-gold btn-block">أضيفي للسلة 🛍</button>
+        <button class="btn btn-wa btn-block">اطلبي دلوقتي واتساب 💬</button>
+      </div>
+      <p class="desc">خلخال من الألماس الصافي بتصميم فاخر يجمع بين الرقي والفخامة — صف من الفصوص البراقة وسلاسل متدلية تنتهي بقطرات ألماس بتخطف العين مع كل حركة. قطعة المناسبات الأولى، وبيوصلك بشهادة ضمان معتمدة وعلبة هدايا فاخرة.</p>
+      <div class="acc">
+        <div class="row">الشحن والتوصيل <span>شحن مجاني مؤمّن</span></div>
+        <div class="row">الاسترجاع والاستبدال <span>خلال 14 يوم</span></div>
+        <div class="row">الضمان <span>شهادة ألماس معتمدة</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CART ══════════ -->
+  <section class="screen" id="s-cart">
+    <div class="announce">شحن مجاني داخل مصر للطلبات الأعلى من 50,000 ج.م</div>
+    <header>
+      <div class="icon-btn">‹</div>
+      <div class="brand"><div class="logo">✦ اسم البراند</div><div class="tag">ذهب وألماس · فخامة في كل تفصيلة</div></div>
+      <div class="icon-btn">🛍<span class="badge">2</span></div>
+    </header>
+    <div class="page-title">سلة التسوق<small>عندك منتجين في السلة</small></div>
+
+    <div class="citem">
+      <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+      <div style="flex:1">
+        <h4>خلخال ذهب «الدلع» — 10 جرام</h4>
+        <div class="meta">عيار 21 · ذهب أصفر · مختوم</div>
+        <div class="row2"><span class="pr">54,900 ج.م</span>
+        <span class="mini-qty"><button>+</button><b>1</b><button>−</button></span></div>
+      </div>
+    </div>
+    <div class="citem">
+      <img src="assets/media-generation-gold-anklet-0-cfa3881f-d884-4ade-9d3e-9a664e61326d.webp" alt="">
+      <div style="flex:1">
+        <h4>خلخال ذهب «الدلع» — 5 جرام</h4>
+        <div class="meta">عيار 21 · ذهب أصفر · مختوم</div>
+        <div class="row2"><span class="pr">27,900 ج.م</span>
+        <span class="mini-qty"><button>+</button><b>1</b><button>−</button></span></div>
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="r"><span>المجموع الفرعي</span><span>82,800 ج.م</span></div>
+      <div class="r"><span>كود خصم DALAA10</span><span class="free">− 8,280 ج.م</span></div>
+      <div class="r"><span>الشحن</span><span class="free">مجاني 🎉</span></div>
+      <div class="r total"><span>الإجمالي</span><span>74,520 ج.م</span></div>
+    </div>
+    <div class="pad">
+      <button class="btn btn-gold btn-block">إتمام الطلب ←</button>
+      <p class="note" style="margin-top:12px;">الدفع عند الاستلام متاح · كل القطع بفاتورة معتمدة ودمغة رسمية</p>
+    </div>
+  </section>
+
+  <!-- ══════════ CHECKOUT ══════════ -->
+  <section class="screen" id="s-checkout">
+    <div class="announce">إتمام الطلب — خطوة واحدة وتخلصي</div>
+    <header>
+      <div class="icon-btn">‹</div>
+      <div class="brand"><div class="logo">✦ اسم البراند</div><div class="tag">ذهب وألماس · فخامة في كل تفصيلة</div></div>
+      <div class="icon-btn">🛍<span class="badge">2</span></div>
+    </header>
+    <div class="page-title">بيانات التوصيل<small>هنكلمك لتأكيد الطلب قبل الشحن</small></div>
+    <form>
+      <div class="fld"><label>الاسم بالكامل</label><input placeholder="مثال: سارة محمد" value="سارة محمد"></div>
+      <div class="fld"><label>رقم الموبايل (واتساب)</label><input placeholder="01xxxxxxxxx" value="0100 123 4567"></div>
+      <div class="fld"><label>المحافظة</label><select><option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option><option>الدقهلية</option></select></div>
+      <div class="fld"><label>العنوان بالتفصيل</label><input placeholder="الشارع، رقم العمارة، علامة مميزة" value="مدينة نصر، شارع مصطفى النحاس، عمارة 12"></div>
+    </form>
+    <div class="pay">
+      <h3>طريقة الدفع</h3>
+      <div class="payopt on"><span class="dot"></span>الدفع عند الاستلام<small>كاش عند وصول الطلب</small></div>
+      <div class="payopt"><span class="dot"></span>انستاباي<small>تحويل فوري</small></div>
+      <div class="paydet">
+        <div class="num">0100 000 0000</div>
+        <div class="hint">حوّلي المبلغ على رقم الانستاباي ده، وبعد التحويل ابعتي صورة الإيصال واتساب — وهنأكد طلبك فوراً ✅</div>
+      </div>
+      <div class="payopt"><span class="dot"></span>تحويل بنكي<small>فيزا · حساب بنكي</small></div>
+      <div class="paydet">
+        <div class="num">EG00 0000 0000 0000 0000</div>
+        <div class="hint">حوّلي على رقم الحساب ده من أي بنك أو محفظة، وابعتيلنا صورة التحويل واتساب للتأكيد ✅</div>
+      </div>
+      <p class="paynote">مفيش بوابة دفع — كل التحويلات يدوية والتأكيد بصورة الإيصال على واتساب.</p>
+    </div>
+    <div class="summary">
+      <div class="r"><span>المنتجات (2)</span><span>82,800 ج.م</span></div>
+      <div class="r"><span>خصم DALAA10</span><span class="free">− 8,280 ج.م</span></div>
+      <div class="r"><span>الشحن</span><span class="free">مجاني</span></div>
+      <div class="r total"><span>الإجمالي</span><span>74,520 ج.م</span></div>
+    </div>
+    <div class="pad">
+      <button class="btn btn-gold btn-block">تأكيد الطلب ✓</button>
+      <p class="note" style="margin-top:12px;">بتأكيد الطلب إنت موافقة على سياسة الاسترجاع والاستبدال خلال 14 يوم</p>
+    </div>
+  </section>
+
+  <!-- ══════════ SUCCESS ══════════ -->
+  <section class="screen" id="s-success">
+    <div class="announce">شكراً لثقتك فينا ✦</div>
+    <header>
+      <div class="icon-btn">☰</div>
+      <div class="brand"><div class="logo">✦ اسم البراند</div><div class="tag">ذهب وألماس · فخامة في كل تفصيلة</div></div>
+      <div class="icon-btn">🛍</div>
+    </header>
+    <div class="success">
+      <div class="check">✓</div>
+      <h1>تم استلام طلبك بنجاح 🎉</h1>
+      <p>هنكلمك على واتساب خلال ساعات العمل لتأكيد الطلب،<br>والتوصيل بياخد من 2 لـ 4 أيام عمل.</p>
+      <div class="ord">رقم الطلب: #1024</div>
+      <br>
+      <button class="btn btn-gold">متابعة التسوق</button>
+      <p style="margin-top:22px;">أي استفسار؟ كلمينا واتساب في أي وقت 💬</p>
+    </div>
+  </section>
+
+</div>
+<script>
+  var s = new URLSearchParams(location.search).get('s') || 'home';
+  var el = document.getElementById('s-' + s);
+  if (el) el.classList.add('active');
+</script>
+</body>
+</html>
